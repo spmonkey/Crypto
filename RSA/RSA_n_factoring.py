@@ -87,7 +87,7 @@ class RSA_n:
     def rsd_m(self, d):
         m = pow(self.c,d,self.n)
         flag = long_to_bytes(m)
-        print('[+] 解密完成\nflag =',flag.decode('utf-8'))
+        print('[+] 解密完成\n明文为：',flag.decode('utf-8'))
 
     def n_factoring(self):
         try:
