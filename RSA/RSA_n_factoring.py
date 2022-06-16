@@ -7,11 +7,14 @@ Author:
     https://www.cnblogs.com/spmonkey/
 邮箱：
     spmonkey@hscsec.cn
+Github:
+    https://github.com/spmonkey/
 '''
 # -*- coding:utf-8 -*-
 from Crypto.Util.number import long_to_bytes
 import requests, re
 
+'''辗转相除法'''
 def rsa_k(p,q,e):
     e1 = e
     n1 = (p - 1) * (q - 1)
@@ -29,6 +32,14 @@ def rsa_k(p,q,e):
                 d1 = 1
                 k = (e1 * d1) - 1
                 break
+            else:
+                '''d * e - n1 * k = 1'''
+                # 最后一步 k = e - 1
+                k = (e2[i-1] * 1 - 1) / n2[i]
+                for j in range(i-1):
+                    d1 = (1 + (k * n2[i - j - 1])) / e2[i - j - 1]
+                    k = (e2[i - (j + 1) - 1] * d1 - 1) / n2[i - j - 1]
+                break
         else:
             e1 = e1 % n1
             e2.append(e1)
@@ -40,6 +51,7 @@ def rsa_k(p,q,e):
                 else:
                     # k=0,d1=1 最后一步
                     # 倒数第二步开始，往前求d
+                    # K != 1
                     '''d * e - n1 * k = 1'''
                     k = (e2[i-1] * 1 -1) / n2[i]
                     for j in range(i-1):
@@ -74,14 +86,18 @@ def n_factoring(n):
         url_q = 'http://factordb.com/' + re_q
         result_q = requests.get(url_q)
         q = re.findall('<input type="text" size=100 name="query" value="(\d*?)">', result_q.text)[0]
-        print("[+] 因式分解完成，正在解密...")
+        print(f'''
+    [+] 因式分解完成
+    p = {p}
+    q = {q}
+    正在解密...
+        ''')
         rsa_k(int(p),int(q),int(e))
     except:
         print("[-] n 分解失败，请确认后重试！")
 
 if __name__ == '__main__':
-    e = input("请输入e:")
-    n = input("请输入n:")
-    c = input("请输入c:")
+    e = input("请输入e：")
+    n = input("请输入n：")
+    c = input("请输入c：")
     n_factoring(n)
-
