@@ -15,7 +15,6 @@ from Crypto.Util.number import long_to_bytes
 import requests
 import argparse
 import re
-import sys
 
 '''命令行参数解析'''
 def parseArgs():
