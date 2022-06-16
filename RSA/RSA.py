@@ -7,6 +7,8 @@ Author:
     https://www.cnblogs.com/spmonkey/
 邮箱：
     spmonkey@hscsec.cn
+Github：
+    https://github.com/spmonkey/
 '''
 # -*- coding:utf-8 -*-
 
@@ -26,6 +28,14 @@ def rsa_k(p,q,e):
             if i == 1:
                 d1 = 1
                 k = (e1 * d1) - 1
+                break
+            else:
+                '''d * e - n1 * k = 1'''
+                # 最后一步 k = e - 1
+                k = (e2[i-1] * 1 - 1) / n2[i]
+                for j in range(i-1):
+                    d1 = (1 + (k * n2[i - j - 1])) / e2[i - j - 1]
+                    k = (e2[i - (j + 1) - 1] * d1 - 1) / n2[i - j - 1]
                 break
         else:
             e1 = e1 % n1
