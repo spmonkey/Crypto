@@ -1,4 +1,0 @@
-libnum
-gmpy2
-requests
-pycryptodome
