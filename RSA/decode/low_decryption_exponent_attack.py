@@ -1,6 +1,6 @@
 '''
 Function:
-    RSA解密算法
+    RSA低指数攻击
 Author:
     spmonkey
 博客链接:
