@@ -1,3 +1,15 @@
+'''
+Function:
+    RSA解密算法
+Author:
+    spmonkey
+博客链接:
+    https://www.cnblogs.com/spmonkey/
+邮箱：
+    spmonkey@hscsec.cn
+Github:
+    https://github.com/spmonkey/
+'''
 import gmpy2
 from functools import reduce
 import libnum
