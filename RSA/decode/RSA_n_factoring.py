@@ -13,7 +13,6 @@ Github:
 # -*- coding:utf-8 -*-
 from Crypto.Util.number import long_to_bytes
 import requests
-import argparse
 import re
 
 
@@ -85,32 +84,26 @@ class RSA_n:
             print('[+] 解密完成\n明文为：',flag)
 
     def n_factoring(self):
-        # try:
-        print("[+] 正在因式分解 n, 请稍后...")
-        url = 'http://factordb.com/index.php?query='
-        urls = url + str(self.n)
-        result = requests.get(urls)
-        re_p = re.findall('<a href="(.*?)"><font',result.text)[1]
-        re_q = re.findall('<a href="(.*?)"><font',result.text)[2]
-        url_p = 'http://factordb.com/' + re_p
-        result_p = requests.get(url_p)
-        p = re.findall('<input type="text" size=100 name="query" value="(\d*?)">',result_p.text)[0]
-        url_q = 'http://factordb.com/' + re_q
-        result_q = requests.get(url_q)
-        q = re.findall('<input type="text" size=100 name="query" value="(\d*?)">', result_q.text)[0]
-        print(f'''
+        try:
+            print("[+] 正在因式分解 n, 请稍后...")
+            url = 'http://factordb.com/index.php?query='
+            urls = url + str(self.n)
+            result = requests.get(urls)
+            re_p = re.findall('<a href="(.*?)"><font',result.text)[1]
+            re_q = re.findall('<a href="(.*?)"><font',result.text)[2]
+            url_p = 'http://factordb.com/' + re_p
+            result_p = requests.get(url_p)
+            p = re.findall('<input type="text" size=100 name="query" value="(\d*?)">',result_p.text)[0]
+            url_q = 'http://factordb.com/' + re_q
+            result_q = requests.get(url_q)
+            q = re.findall('<input type="text" size=100 name="query" value="(\d*?)">', result_q.text)[0]
+            print(f'''
 [+] 因式分解完成
 p = {p}
 q = {q}
 正在解密...
-        ''')
-        self.rsa_k(int(p),int(q))
-        # except:
-        #     print("[-] 出错啦！请重新来！")
+            ''')
+            self.rsa_k(int(p),int(q))
+        except:
+            print("[-] 出错啦！请重新来！")
 
-
-# '''程序入口'''
-# if __name__ == '__main__':
-#     n =
-#     decode = RSA_n(n=n, e=e, c=c)
-#     decode.main()
