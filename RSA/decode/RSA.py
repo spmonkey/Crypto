@@ -38,10 +38,10 @@ class RSA:
                 else:
                     '''d * e - n1 * k = 1'''
                     # 最后一步 k = e - 1
-                    k = (e2[i - 1] * 1 - 1) / n2[i]
+                    k = (e2[i - 1] * 1 - 1) // n2[i]
                     for j in range(i - 1):
-                        d1 = (1 + (k * n2[i - j - 1])) / e2[i - j - 1]
-                        k = (e2[i - (j + 1) - 1] * d1 - 1) / n2[i - j - 1]
+                        d1 = (1 + (k * n2[i - j - 1])) // e2[i - j - 1]
+                        k = (e2[i - (j + 1) - 1] * d1 - 1) // n2[i - j - 1]
                     break
             else:
                 e1 = e1 % n1
@@ -49,16 +49,16 @@ class RSA:
                 if e1 == 1:
                     if i == 1:
                         d1 = 1
-                        k = (self.e * d1 -1) / n1
+                        k = (self.e * d1 -1) // n1
                         break
                     else:
                         # k=0,d1=1 最后一步
                         # 倒数第二步开始，往前求d
                         '''d * e - n1 * k = 1'''
-                        k = (e2[i-1] * 1 -1) / n2[i]
+                        k = (e2[i-1] * 1 -1) // n2[i]
                         for j in range(i-1):
-                            d1 = (1 + (k*n2[i-j-1])) / e2[i-j-1]
-                            k = (e2[i-(j+1)-1] * d1 -1) / n2[i-j-1]
+                            d1 = (1 + (k*n2[i-j-1])) // e2[i-j-1]
+                            k = (e2[i-(j+1)-1] * d1 -1) // n2[i-j-1]
                         break
         self.rsa_d(k)
 
