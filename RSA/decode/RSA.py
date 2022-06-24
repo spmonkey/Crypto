@@ -9,6 +9,7 @@ Author:
     spmonkey@hscsec.cn
 '''
 # -*- coding:utf-8 -*-
+from Crypto.Util.number import long_to_bytes
 
 class RSA:
     def __init__(self, n=None, c=None, e=None, p=None, q=None):
@@ -38,10 +39,10 @@ class RSA:
                 else:
                     '''d * e - n1 * k = 1'''
                     # 最后一步 k = e - 1
-                    k = (e2[i - 1] * 1 - 1) // n2[i]
+                    k = (e2[i - 1] * 1 - 1) / n2[i]
                     for j in range(i - 1):
-                        d1 = (1 + (k * n2[i - j - 1])) // e2[i - j - 1]
-                        k = (e2[i - (j + 1) - 1] * d1 - 1) // n2[i - j - 1]
+                        d1 = (1 + (k * n2[i - j - 1])) / e2[i - j - 1]
+                        k = (e2[i - (j + 1) - 1] * d1 - 1) / n2[i - j - 1]
                     break
             else:
                 e1 = e1 % n1
@@ -49,16 +50,16 @@ class RSA:
                 if e1 == 1:
                     if i == 1:
                         d1 = 1
-                        k = (self.e * d1 -1) // n1
+                        k = (self.e * d1 -1) / n1
                         break
                     else:
                         # k=0,d1=1 最后一步
                         # 倒数第二步开始，往前求d
                         '''d * e - n1 * k = 1'''
-                        k = (e2[i-1] * 1 -1) // n2[i]
+                        k = (e2[i-1] * 1 -1) / n2[i]
                         for j in range(i-1):
-                            d1 = (1 + (k*n2[i-j-1])) // e2[i-j-1]
-                            k = (e2[i-(j+1)-1] * d1 -1) // n2[i-j-1]
+                            d1 = (1 + (k*n2[i-j-1])) / e2[i-j-1]
+                            k = (e2[i-(j+1)-1] * d1 -1) / n2[i-j-1]
                         break
         self.rsa_d(k)
 
@@ -67,15 +68,15 @@ class RSA:
         # 第一步
         # " / "就表示 浮点数除法，返回浮点结果;" // "表示整数除法
         d = (1 + n1 * int(k)) // self.e
+        print("d =", d)
         self.rsd_m(int(d))
 
     def rsd_m(self, d):
-        from Crypto.Util.number import long_to_bytes
         m = pow(self.c,d,self.n)
+        print("m = ", m)
         flag = long_to_bytes(m)
         try:
-            print('[+] 解密完成\n明文为：',flag.decode('utf-8'))
+            print('flag =', flag.decode('utf-8'))
         except:
-            print('[+] 解密完成\n明文为：', flag)
-
+            print('flag =', flag)
 
