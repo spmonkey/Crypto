@@ -73,10 +73,12 @@ class RSA_n:
         # 第一步
         # " / "就表示 浮点数除法，返回浮点结果;" // "表示整数除法
         d = (1 + n1 * int(k)) // self.e
+        print("d =", d)
         self.rsd_m(int(d))
 
     def rsd_m(self, d):
         m = pow(self.c,d,self.n)
+        print("m = ", m)
         flag = long_to_bytes(m)
         try:
             print('[+] 解密完成\n明文为：',flag.decode('utf-8'))
