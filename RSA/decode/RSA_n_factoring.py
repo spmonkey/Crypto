@@ -71,7 +71,6 @@ class RSA_n:
     def rsa_d(self, p, q, k):
         n1 = (p - 1) * (q - 1)
         # 第一步
-        # " / "就表示 浮点数除法，返回浮点结果;" // "表示整数除法
         d = (1 + n1 * int(k)) // self.e
         print("d =", d)
         self.rsd_m(int(d))
